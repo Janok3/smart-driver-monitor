@@ -7,7 +7,7 @@ export async function GET() {
     try {
         const drivers = await getAllDrivers();
 
-        return NextResponse.json({ "drivers": drivers }, { status: 200 });
+        return NextResponse.json({ "data": drivers }, { status: 200 });
     } catch (error) {
         console.error('Database error:', error);
         return NextResponse.json(

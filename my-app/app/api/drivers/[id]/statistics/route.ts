@@ -8,9 +8,6 @@ export async function GET(
     { params }: { params: { id: string } }
 ) {
     try {
-        console.log("Received params:", params);
-        console.log("ID value:", params?.id);
-
         if (!params || typeof params.id === 'undefined') {
             return NextResponse.json(
                 { error: 'Driver ID is required' },
@@ -28,7 +25,7 @@ export async function GET(
 
         const drivers = await getStatistics(driverId);
 
-        return NextResponse.json({ "drivers": drivers }, { status: 200 });
+        return NextResponse.json({ "data": drivers }, { status: 200 });
     } catch (error) {
         console.error('Database error:', error);
         return NextResponse.json(
