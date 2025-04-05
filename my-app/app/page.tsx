@@ -29,7 +29,7 @@ export default function Dashboard() {
     queryKey: queryKeys.fetchDriverStats(selectedDriver),
     enabled: !!selectedDriver,
   });
-  console.log("Stats:", driverStats);
+
   if (isPending) {
     return <span>Loading...</span>
   }
