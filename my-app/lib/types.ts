@@ -26,3 +26,16 @@ export interface DrivingRecord {
     is_oil_leak: number | null;
     record_date: Date | null;
 }
+
+export interface DriverStatistics {
+    total_neutral_slide_incidents: number;
+    total_neutral_slide_duration: number;
+    total_overspeed_incidents: number;
+    total_overspeed_duration: number;
+    total_rapidly_speedup_incidents: number;
+    total_rapidly_slowdown_incidents: number;
+    total_fatigue_driving_incidents: number;
+    total_oil_leak_incidents: number;
+    total_throttle_stop_incidents: number;
+    max_speed: number;
+}

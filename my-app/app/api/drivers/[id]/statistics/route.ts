@@ -1,13 +1,16 @@
 import { NextResponse } from 'next/server';
 
-import getRecordsByDriverId from '@/lib/db/queries/getRecordsByDriverId';
+import getStatistics from '@/lib/db/queries/getStatistics';
 
-// GET /api/records - Retrieve all records for a specific driver
+// GET /api/drivers - Retrieve driver's statistics
 export async function GET(
-    request: Request,
+    request: Request, 
     { params }: { params: { id: string } }
 ) {
     try {
+        console.log("Received params:", params);
+        console.log("ID value:", params?.id);
+
         if (!params || typeof params.id === 'undefined') {
             return NextResponse.json(
                 { error: 'Driver ID is required' },
@@ -23,7 +26,7 @@ export async function GET(
             );
         }
 
-        const drivers = await getRecordsByDriverId(driverId);
+        const drivers = await getStatistics(driverId);
 
         return NextResponse.json({ "drivers": drivers }, { status: 200 });
     } catch (error) {
