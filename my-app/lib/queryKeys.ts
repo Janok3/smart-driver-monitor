@@ -1,4 +1,4 @@
 export const queryKeys = {
-    // userLists: (userId: string) => ['userLists', userId], // ! Remove
     fetchAllDrivers: () => ['drivers'],
+    fetchDriverStats: (driverId: string | null) => ['drivers', driverId, 'statistics'],
 } as const;

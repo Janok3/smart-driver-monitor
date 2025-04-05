@@ -9,9 +9,15 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 
-export default function DriverDropdown({ drivers }: { drivers: Driver[] }) {
+export default function DriverDropdown({
+    drivers,
+    onDriverChange,
+}: {
+    drivers: Driver[],
+    onDriverChange: (driverId: string) => void
+}) {
     return (
-        <Select>
+        <Select onValueChange={onDriverChange}>
             <SelectTrigger className="w-[250px]">
                 <SelectValue placeholder="Select a Driver" />
             </SelectTrigger>
