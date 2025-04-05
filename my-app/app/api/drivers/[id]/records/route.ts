@@ -3,10 +3,12 @@ import { NextResponse } from 'next/server';
 import getRecordsByDriverId from '@/lib/db/queries/getRecordsByDriverId';
 
 // GET /api/records - Retrieve all records for a specific driver
-export async function GET(request: Request) {
+export async function GET(
+    request: Request,
+    { params }: { params: { id: string } }
+) {
     try {
-        const url = new URL(request.url);
-        const driverId = url.searchParams.get('id');
+        const driverId = params.id;
         if (!driverId) {
             return NextResponse.json(
                 { error: 'Driver ID is required' },
