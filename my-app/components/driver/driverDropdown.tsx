@@ -25,11 +25,17 @@ export default function DriverDropdown({
                 <SelectGroup>
                     <SelectLabel>Drivers</SelectLabel>
                     {
-                        drivers.map((driver) => (
-                            <SelectItem key={driver.driver_id} value={driver.driver_id}>
-                                {driver.driver_id} - {driver.car_plate_number}
+                        drivers.length === 0 ? (
+                            <SelectItem value="no-drivers">
+                                No drivers available
                             </SelectItem>
-                        ))
+                        ) : (
+                            drivers.map((driver) => (
+                                <SelectItem key={driver.driver_id} value={driver.driver_id}>
+                                    {driver.driver_id} - {driver.car_plate_number}
+                                </SelectItem>
+                            ))
+                        )
                     }
                 </SelectGroup>
             </SelectContent>
