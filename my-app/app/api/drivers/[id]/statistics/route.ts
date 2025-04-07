@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 
 import getStatistics from '@/lib/db/queries/getStatistics';
 
-// GET /api/drivers - Retrieve driver's statistics
+// GET /api/drivers/[id]/statistics - Retrieve statistics for a driver to be used in the dashboard
 export async function GET(
     request: Request, 
     { params }: { params: { id: string } }

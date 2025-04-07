@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 
 import getRecordsByDriverId from '@/lib/db/queries/getRecordsByDriverId';
 
-// GET /api/records - Retrieve all records for a specific driver
+// GET /api/drivers/[id]/records - Retrieve all records for a specific driver
 export async function GET(
     request: Request,
     { params }: { params: { id: string } }
