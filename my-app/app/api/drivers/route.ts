@@ -9,9 +9,9 @@ export async function GET() {
 
         return NextResponse.json({ "data": drivers }, { status: 200 });
     } catch (error) {
-        console.error('Database error:', error);
+        console.error('Error:', error);
         return NextResponse.json(
-            { error: 'Database connection failed' },
+            { error: error },
             { status: 500 }
         );
     }
