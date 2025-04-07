@@ -1,10 +1,11 @@
 "use client"
 
 import { useState } from 'react';
+import { LoaderCircle } from 'lucide-react';
 
+import { AlertsDisplay } from './alertsDisplay';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { LoaderCircle } from 'lucide-react';
 import {
     Select,
     SelectContent,
@@ -39,6 +40,7 @@ export default function RealtimeControls({ driverId, date }: RealtimeControlsPro
         pollingInterval,
         batchSize: 100,
     });
+
     if (isLoading) {
         return <div>Loading data...</div>;
     }
@@ -50,7 +52,7 @@ export default function RealtimeControls({ driverId, date }: RealtimeControlsPro
     if (!driverId || !date) {
         return <div>Please select a driver and date</div>;
     }
-    console.log("isPlaying", isPlaying);
+
     return (
         <div className="space-y-4">
             <div className="flex justify-end items-center space-x-4">
@@ -109,28 +111,11 @@ export default function RealtimeControls({ driverId, date }: RealtimeControlsPro
                                     </div>
                                 </CardContent>
                             </Card>
-                            <Card className="bg-red-50">
-                                <CardHeader>
-                                    <h3 className="font-medium text-lg">Alerts</h3>
-                                </CardHeader>
-                                <CardContent className="max-h-70 overflow-y-auto">
-                                    {
-                                        alerts.length === 0 ? (
-                                            <div className="text-center text-gray-500">No alerts</div>
-                                        ) :
-                                            alerts.map((alert, idx) => (
-                                                <div key={idx} className="p-2 border-t">
-                                                    <div className="font-medium text-red-600">{alert.type}</div>
-                                                    <div className="text-sm text-gray-600">Time: {alert.time}</div>
-                                                </div>
-                                            ))
-                                    }
-                                </CardContent>
-                            </Card>
+                            <AlertsDisplay alerts={alerts} />
                         </div>
                     </div>
                 ) : (
-                    <div></div>
+                    <></>
                 )
             }
         </div >
