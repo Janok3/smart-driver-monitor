@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Toaster } from 'sonner';
 
 import Providers from "./providers";
 
@@ -37,6 +38,7 @@ export default function RootLayout({
           <main className="py-12 px-80">
             {children}
           </main>
+          <Toaster />
         </Providers>
       </body>
     </html>
