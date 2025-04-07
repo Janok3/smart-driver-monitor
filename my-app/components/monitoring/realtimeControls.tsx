@@ -20,7 +20,7 @@ interface RealtimeControlsProps {
     date: string | null;
 }
 
-export const Loader = () => <LoaderCircle className="w-6 h-6 animate-spin text-blue-300" />;
+export const Loader = () => <LoaderCircle className="w-6 h-6 animate-spin" />;
 
 export default function RealtimeControls({ driverId, date }: RealtimeControlsProps) {
     const [pollingInterval, setPollingInterval] = useState(5000);
@@ -39,7 +39,6 @@ export default function RealtimeControls({ driverId, date }: RealtimeControlsPro
         pollingInterval,
         batchSize: 100,
     });
-    console.log("displayData: ", displayData);
     if (isLoading) {
         return <div>Loading data...</div>;
     }
@@ -51,20 +50,11 @@ export default function RealtimeControls({ driverId, date }: RealtimeControlsPro
     if (!driverId || !date) {
         return <div>Please select a driver and date</div>;
     }
-
+    console.log("isPlaying", isPlaying);
     return (
         <div className="space-y-4">
             <div className="flex justify-end items-center space-x-4">
                 <div className="flex flex-row items-center space-x-4">
-                    <Button
-                        onClick={togglePlayback}
-                        className="px-4 py-2 bg-blue-700 text-white rounded hover:bg-blue-500 transition-colors"
-                    >
-                        {isPlaying ? 'Pause' : 'Play'}
-                        <div className={isPlaying && hasMoreData ? "block" : "hidden"}>
-                            <Loader />
-                        </div>
-                    </Button>
                     <div className="flex items-center space-x-2">
                         <span>Speed:</span>
                         <Select value={String(pollingInterval)} onValueChange={(value) => setPollingInterval(Number(value))}>
@@ -79,6 +69,14 @@ export default function RealtimeControls({ driverId, date }: RealtimeControlsPro
                             </SelectContent>
                         </Select>
                     </div>
+                    <Button
+                        onClick={togglePlayback}
+                    >
+                        {isPlaying && hasMoreData ? 'Pause' : 'Play'}
+                        <div className={isPlaying && hasMoreData ? "block" : "hidden"}>
+                            <Loader />
+                        </div>
+                    </Button>
                 </div>
             </div>
 

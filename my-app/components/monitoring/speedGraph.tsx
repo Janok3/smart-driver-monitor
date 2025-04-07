@@ -51,7 +51,6 @@ export function SpeedGraph({ chartData }: { chartData: DrivingRecord[] }) {
                             padding={{ left: 20, right: 20 }}
                             tickMargin={8}
                             tickFormatter={(value) => {
-                                console.log("X-axis value:", value);
                                 try {
                                     const date = new Date(value);
                                     return date.toLocaleTimeString([], {
