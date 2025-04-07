@@ -39,3 +39,8 @@ export interface DriverStatistics {
     total_throttle_stop_incidents: number;
     max_speed: number;
 }
+
+export interface RealtimeMonitoringOptions {
+    pollingInterval: number;
+    batchSize: number;
+}

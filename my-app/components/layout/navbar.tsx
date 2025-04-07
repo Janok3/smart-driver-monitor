@@ -22,16 +22,30 @@ export function Navbar() {
                 <NavigationMenuList>
                     <NavigationMenuItem>
                         <Link href="/" legacyBehavior passHref>
-                            <NavigationMenuLink 
+                            <NavigationMenuLink
                                 className={cn(
-                                    navigationMenuTriggerStyle(), 
+                                    navigationMenuTriggerStyle(),
                                     pathname === "/" ? "text-foreground" : "text-foreground/50"
                                 )}
                             >
                                 Dashboard
                             </NavigationMenuLink>
+
                         </Link>
                     </NavigationMenuItem>
+                    <NavigationMenuItem>
+                        <Link href="/realtime-monitoring" legacyBehavior passHref>
+                            <NavigationMenuLink
+                                className={cn(
+                                    navigationMenuTriggerStyle(),
+                                    pathname === "/realtime-monitoring" ? "text-foreground" : "text-foreground/50"
+                                )}
+                            >
+                                Realtime Monitoring
+                            </NavigationMenuLink>
+                        </Link>
+                    </NavigationMenuItem>
+
                 </NavigationMenuList>
             </NavigationMenu>
         </div>
