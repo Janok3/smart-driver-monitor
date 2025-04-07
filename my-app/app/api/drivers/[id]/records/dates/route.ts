@@ -10,7 +10,7 @@ export async function GET(
     try {
         const { id: driverId } = await params;
         const dates = await getRecordDates(driverId);
-
+        console.log("dates", dates);
         return NextResponse.json({ "data": dates }, { status: 200 });
     } catch (error) {
         console.error('Error:', error);
