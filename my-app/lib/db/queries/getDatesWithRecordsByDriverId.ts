@@ -4,7 +4,7 @@ export default async function getDatesWithRecordsByDriverId(driverId: string): P
     const client = await pool.connect();
 
     const query = `
-        SELECT DISTINCT DATE(record_time) as date 
+        SELECT DISTINCT TO_CHAR(record_time, 'YYYY-MM-DD') as date 
         FROM driving_records
         WHERE driver_id = $1
         ORDER BY date ASC
