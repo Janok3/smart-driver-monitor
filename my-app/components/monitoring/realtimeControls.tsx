@@ -56,11 +56,11 @@ export default function RealtimeControls({ driverId, date }: RealtimeControlsPro
     return (
         <div className="space-y-4">
             <div className="flex justify-end items-center space-x-4">
-                <div className="flex flex-row items-center space-x-4">
+                <div className="flex flex-row items-center space-x-2">
                     <div className="flex items-center space-x-2">
                         <span>Speed:</span>
                         <Select value={String(pollingInterval)} onValueChange={(value) => setPollingInterval(Number(value))}>
-                            <SelectTrigger className="w-[120px]">
+                            <SelectTrigger className="w-[250px]">
                                 <SelectValue placeholder="Select speed" />
                             </SelectTrigger>
                             <SelectContent>
@@ -72,6 +72,7 @@ export default function RealtimeControls({ driverId, date }: RealtimeControlsPro
                         </Select>
                     </div>
                     <Button
+                        className="w-[250px]"
                         onClick={togglePlayback}
                     >
                         {isPlaying && hasMoreData ? 'Pause' : 'Play'}
