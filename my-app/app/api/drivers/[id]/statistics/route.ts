@@ -10,9 +10,9 @@ export async function GET(
     try {
         const { id: driverId } = await params;
 
-        const drivers = await getStatistics(driverId);
+        const statistics = await getStatistics(driverId);
 
-        return NextResponse.json({ "data": drivers }, { status: 200 });
+        return NextResponse.json({ "data": statistics }, { status: 200 });
     } catch (error) {
         console.error('Error:', error);
         return NextResponse.json(
