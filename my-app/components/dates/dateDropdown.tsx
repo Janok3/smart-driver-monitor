@@ -11,14 +11,29 @@ import {
 export default function DateDropdown({
     dates,
     onDateChange,
+    selectedDriver,
+    selectedDate
 }: {
     dates: string[],
-    onDateChange: (date: string) => void
+    onDateChange: (date: string) => void,
+    selectedDriver: string | null,
+    selectedDate: string | null
 }) {
+    console.log("Selected Date:", selectedDate);
+    const placeholder = !selectedDriver
+        ? "No driver selected"
+        : dates.length === 0
+            ? "No driving records"
+            : "Select a date"
     return (
-        <Select onValueChange={onDateChange} disabled={dates.length == 0}>
+        <Select
+            onValueChange={onDateChange}
+            disabled={dates.length == 0}
+            value={selectedDate || undefined}
+            key={selectedDriver || 'no-driver'}
+        >
             <SelectTrigger className="w-[250px]">
-                <SelectValue placeholder="Select a Date" />
+                <SelectValue placeholder={placeholder} />
             </SelectTrigger>
             <SelectContent>
                 <SelectGroup>

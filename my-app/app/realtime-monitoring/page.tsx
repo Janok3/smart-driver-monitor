@@ -53,7 +53,12 @@ export default function RealtimeMonitoring() {
                     </h1>
                     <div className="flex flex-row gap-2">
                         <DriverDropdown drivers={drivers.data} onDriverChange={handleDriverChange} />
-                        <DateDropdown dates={dates.data} onDateChange={handleDateChange} />
+                        <DateDropdown
+                            dates={dates.data}
+                            onDateChange={handleDateChange}
+                            selectedDate={selectedDate}
+                            selectedDriver={selectedDriver}
+                        />
                     </div>
                 </div>
             </section>
