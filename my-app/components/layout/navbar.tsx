@@ -17,7 +17,12 @@ export function Navbar() {
     const pathname = usePathname();
 
     return (
-        <div className="py-2 px-80 border-b flex flex-row justify-end">
+        <div className="py-2 px-80 border-b flex flex-row justify-between">
+            <div className="align-middle">
+                <h1 className="text-lg font-thin ">
+                    DRIVERSMART
+                </h1>
+            </div>
             <NavigationMenu>
                 <NavigationMenuList>
                     <NavigationMenuItem>
