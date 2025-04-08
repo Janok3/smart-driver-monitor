@@ -63,9 +63,17 @@ export default function RealtimeMonitoring() {
                 </div>
             </section>
             <section className="min-h-[50vh]">
-                {!selectedDriver || !selectedDate ? (
-                    <div className="h-full w-full flex justify-center items-center">
-                        <p className="text-foreground/50">Please select a driver and date to begin mock monitoring.</p>
+                {!selectedDriver ? (
+                    <div className="mt-[30vh] h-full w-full flex justify-center items-center">
+                        <p className="text-foreground/50">Please select a driver to begin mock monitoring.</p>
+                    </div>
+                ) : dates.data.length === 0 ? (
+                    <div className="mt-[30vh] h-full w-full flex justify-center items-center">
+                        <p className="text-foreground/50">No driving records for driver</p>
+                    </div>
+                ) : !selectedDate ? (
+                    <div className="mt-[30vh] h-full w-full flex justify-center items-center">
+                        <p className="text-foreground/50">Please select a date to begin mock monitoring.</p>
                     </div>
                 ) : (
                     <div className="w-full">

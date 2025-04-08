@@ -13,6 +13,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
 import { SpeedGraph } from './speedGraph';
 import { useRealtimeMonitoring } from '@/lib/hooks/useRealtimeMonitoring';
 
@@ -82,6 +83,9 @@ export default function RealtimeControls({ driverId, date }: RealtimeControlsPro
                     </Button>
                 </div>
             </div>
+
+            <Separator />
+
 
             {
                 displayData.length > 0 ? (
