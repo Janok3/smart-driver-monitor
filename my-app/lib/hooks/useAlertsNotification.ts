@@ -6,6 +6,15 @@ export interface Alert {
     time: string;
 }
 
+function formatAlertTime(timestamp: string): string {
+    try {
+        const date = new Date(timestamp);
+        return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    } catch {
+        return timestamp;
+    }
+}
+
 export function useAlertsNotification(alerts: Alert[]) {
     const lastProcessedAlertIndex = useRef<number>(-1);
 
@@ -13,7 +22,8 @@ export function useAlertsNotification(alerts: Alert[]) {
         if (alerts && alerts.length > 0) {
             for (let i = lastProcessedAlertIndex.current + 1; i < alerts.length; i++) {
                 toast.warning(`${alerts[i].type}`, {
-                    description: `Alert Type: ${alerts[i].type} at ${alerts[i].time}`,
+                    description: `${formatAlertTime(alerts[i].time)}`,
+                    position: "top-center"
                 });
             }
 

@@ -15,7 +15,7 @@ export function AlertsDisplay({ alerts }: AlertsDisplayProps) {
             <CardHeader>
                 <h3 className="font-medium text-lg">Alerts</h3>
             </CardHeader>
-            <CardContent className="snap-y snap-proximity overflow-y-auto max-h-[480px]">
+            <CardContent className="snap-y snap-proximity overflow-y-auto max-h-[200px] md:max-h-[250px] lg:max-h-[250px] xl:max-h-[300px] 2xl:max-h-[520px]">
                 {
                     sortedAlerts.length === 0 ? (
                         <div className="text-center text-gray-500">No alerts</div>
@@ -23,7 +23,7 @@ export function AlertsDisplay({ alerts }: AlertsDisplayProps) {
                         sortedAlerts.map((alert, idx) => (
                             <div key={idx} className="snap-center p-2 border-t">
                                 <div className="font-medium text-red-600">{alert.type}</div>
-                                <div className="text-sm text-gray-600">Time: {alert.time}</div>
+                                <div className="text-sm text-gray-600">{alert.time}</div>
                             </div>
                         ))
                 }

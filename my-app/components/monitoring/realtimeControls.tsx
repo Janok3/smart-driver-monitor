@@ -89,7 +89,7 @@ export default function RealtimeControls({ driverId, date }: RealtimeControlsPro
 
             {
                 displayData.length > 0 ? (
-                    <div className="grid grid-cols-10 gap-4  ">
+                    <div className="grid grid-cols-10 gap-4">
                         <div className="col-span-10">
                             <Card>
                                 <CardHeader className="flex flex-row justify-between py-3">
@@ -101,7 +101,7 @@ export default function RealtimeControls({ driverId, date }: RealtimeControlsPro
                                 </CardHeader>
                                 <CardContent className="pt-0 pb-3">
                                     {/* Top row - Basic info */}
-                                    <div className="grid grid-cols-4 gap-4 mb-2">
+                                    <div className="grid grid-cols-4 mb-2">
                                         <div>
                                             <span className="text-gray-500 text-sm">Speed:</span>
                                             <span className="font-medium ml-1 text-sm">{currentRecord?.speed} km/h</span>
@@ -128,10 +128,6 @@ export default function RealtimeControls({ driverId, date }: RealtimeControlsPro
                                         </div>
                                     </div>
 
-                                    {/* Second row - Additional basic info */}
-                                    <div className="grid grid-cols-4 gap-2 mb-2">
-                                    </div>
-
                                     {/* Separator */}
                                     <div className="h-px bg-gray-100 my-2"></div>
 
@@ -140,7 +136,7 @@ export default function RealtimeControls({ driverId, date }: RealtimeControlsPro
                                         {currentRecord?.is_rapidly_speedup !== null && (
                                             <div className="flex items-center">
                                                 <div className={`h-2 w-2 rounded-full mr-1 ${currentRecord?.is_rapidly_speedup ? 'bg-red-500' : 'bg-green-500'}`}></div>
-                                                <span className="text-gray-500">Accel:</span>
+                                                <span className="text-gray-500">Rapidly Accelerating:</span>
                                                 <span className="font-medium ml-1">{currentRecord?.is_rapidly_speedup ? 'Yes' : 'No'}</span>
                                             </div>
                                         )}
@@ -148,7 +144,7 @@ export default function RealtimeControls({ driverId, date }: RealtimeControlsPro
                                         {currentRecord?.is_rapidly_slowdown !== null && (
                                             <div className="flex items-center">
                                                 <div className={`h-2 w-2 rounded-full mr-1 ${currentRecord?.is_rapidly_slowdown ? 'bg-red-500' : 'bg-green-500'}`}></div>
-                                                <span className="text-gray-500">Decel:</span>
+                                                <span className="text-gray-500">Rapidly Decelerating:</span>
                                                 <span className="font-medium ml-1">{currentRecord?.is_rapidly_slowdown ? 'Yes' : 'No'}</span>
                                             </div>
                                         )}
@@ -171,14 +167,14 @@ export default function RealtimeControls({ driverId, date }: RealtimeControlsPro
                                         {currentRecord?.is_overspeed !== null && (
                                             <div className="flex items-center">
                                                 <div className={`h-2 w-2 rounded-full mr-1 ${currentRecord?.is_overspeed ? 'bg-red-500' : 'bg-green-500'}`}></div>
-                                                <span className="text-gray-500">Speed:</span>
-                                                <span className="font-medium ml-1">{currentRecord?.is_overspeed ? 'Over' : 'OK'}</span>
+                                                <span className="text-gray-500">Over Speeding:</span>
+                                                <span className="font-medium ml-1">{currentRecord?.is_overspeed ? 'Yes' : 'No'}</span>
                                             </div>
                                         )}
 
                                         {currentRecord?.overspeed_time !== null && currentRecord?.overspeed_time !== undefined && currentRecord.overspeed_time > 0 && (
                                             <div className="flex items-center">
-                                                <span className="text-gray-500">O-Time:</span>
+                                                <span className="text-gray-500">Overspeed Time:</span>
                                                 <span className="font-medium ml-1">{currentRecord.overspeed_time}s</span>
                                             </div>
                                         )}
