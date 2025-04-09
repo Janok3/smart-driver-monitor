@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { queryKeys } from '@/lib/queryKeys';
@@ -121,6 +120,67 @@ export function useRealtimeMonitoring(
         }
     };
 
+    const startPlayback = () => {
+        if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
+        }
+
+        setIsPlaying(true);
+        const nextIndex = globalIndexRef.current > -1 ? globalIndexRef.current : 0;
+        globalIndexRef.current = nextIndex;
+        setCurrentIndex(nextIndex);
+        processRecord(nextIndex);
+
+        const currentDateRef = date;
+        const currentDriverRef = driverId;
+
+        intervalRef.current = setInterval(() => {
+            if (date !== currentDateRef || driverId !== currentDriverRef) {
+                if (intervalRef.current) {
+                    clearInterval(intervalRef.current);
+                    intervalRef.current = null;
+                }
+                return;
+            }
+
+            const nextIndex = globalIndexRef.current + 1;
+
+            const currentBatch = Math.floor(globalIndexRef.current / batchSize);
+            const nextBatch = Math.floor(nextIndex / batchSize);
+
+            if (nextBatch > currentBatch && !endOfDataReached) {
+                const nextBatchStart = nextBatch * batchSize;
+
+                queryClient.prefetchQuery({
+                    queryKey: queryKeys.fetchRealtimeRecords(
+                        driverId,
+                        date,
+                        nextBatchStart,
+                        batchSize
+                    ),
+                    queryFn: () => {
+                        return fetch(`/api/drivers/${driverId}/records/realtime?date=${date}&startIndex=${nextBatchStart}&limit=${batchSize}`)
+                            .then(res => res.json());
+                    },
+                });
+            }
+
+            if (nextIndex >= allRecordsRef.current.length && endOfDataReached) {
+                if (intervalRef.current) {
+                    clearInterval(intervalRef.current);
+                    intervalRef.current = null;
+                }
+                setIsPlaying(false);
+                return;
+            }
+
+            globalIndexRef.current = nextIndex;
+            setCurrentIndex(nextIndex);
+            processRecord(nextIndex);
+        }, pollingInterval);
+    };
+
     const togglePlayback = () => {
         if (isPlaying) {
             if (intervalRef.current) {
@@ -129,51 +189,15 @@ export function useRealtimeMonitoring(
             }
             setIsPlaying(false);
         } else {
-            setIsPlaying(true);
-
-            const nextIndex = 0;
-            globalIndexRef.current = nextIndex;
-            setCurrentIndex(nextIndex);
-            processRecord(nextIndex);
-
-            intervalRef.current = setInterval(() => {
-                const nextIndex = globalIndexRef.current + 1;
-
-                const currentBatch = Math.floor(globalIndexRef.current / batchSize);
-                const nextBatch = Math.floor(nextIndex / batchSize);
-
-                if (nextBatch > currentBatch && !endOfDataReached) {
-                    const nextBatchStart = nextBatch * batchSize;
-
-                    queryClient.prefetchQuery({
-                        queryKey: queryKeys.fetchRealtimeRecords(
-                            driverId,
-                            date,
-                            nextBatchStart,
-                            batchSize
-                        ),
-                        queryFn: () => {
-                            return fetch(`/api/drivers/${driverId}/records/realtime?date=${date}&startIndex=${nextBatchStart}&limit=${batchSize}`)
-                                .then(res => res.json());
-                        },
-                    });
-                }
-
-                if (nextIndex >= allRecordsRef.current.length && endOfDataReached) {
-                    if (intervalRef.current) {
-                        clearInterval(intervalRef.current);
-                        intervalRef.current = null;
-                    }
-                    setIsPlaying(false);
-                    return;
-                }
-
-                globalIndexRef.current = nextIndex;
-                setCurrentIndex(nextIndex);
-                processRecord(nextIndex);
-            }, pollingInterval);
+            startPlayback();
         }
     };
+
+    useEffect(() => {
+        if (isPlaying && intervalRef.current) {
+            startPlayback();
+        }
+    }, [pollingInterval]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         return () => {
@@ -184,6 +208,11 @@ export function useRealtimeMonitoring(
     }, []);
 
     useEffect(() => {
+        if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
+        }
+
         setCurrentIndex(-1);
         setDisplayData([]);
         setCurrentRecord(null);
@@ -193,11 +222,6 @@ export function useRealtimeMonitoring(
         globalIndexRef.current = -1;
         allRecordsRef.current = [];
         processedIndices.current.clear();
-
-        if (intervalRef.current) {
-            clearInterval(intervalRef.current);
-            intervalRef.current = null;
-        }
     }, [driverId, date]);
 
     return {
