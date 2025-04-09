@@ -34,7 +34,7 @@ export default function RootLayout({
       >
         <Providers>
           <Navbar />
-          <main className="py-12 px-80">
+          <main className="py-12 px-20 md:py-12 md:px-30 lg:py-12 lg:px-40 xl:py-12 xl:px-50">
             {children}
           </main>
           <Toaster />
