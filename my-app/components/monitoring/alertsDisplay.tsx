@@ -8,6 +8,8 @@ interface AlertsDisplayProps {
 export function AlertsDisplay({ alerts }: AlertsDisplayProps) {
     useAlertsNotification(alerts);
 
+    const sortedAlerts = [...alerts].reverse();
+
     return (
         <Card className="bg-red-50">
             <CardHeader>
@@ -15,10 +17,10 @@ export function AlertsDisplay({ alerts }: AlertsDisplayProps) {
             </CardHeader>
             <CardContent className="max-h-70 overflow-y-auto">
                 {
-                    alerts.length === 0 ? (
+                    sortedAlerts.length === 0 ? (
                         <div className="text-center text-gray-500">No alerts</div>
                     ) :
-                        alerts.map((alert, idx) => (
+                        sortedAlerts.map((alert, idx) => (
                             <div key={idx} className="p-2 border-t">
                                 <div className="font-medium text-red-600">{alert.type}</div>
                                 <div className="text-sm text-gray-600">Time: {alert.time}</div>
