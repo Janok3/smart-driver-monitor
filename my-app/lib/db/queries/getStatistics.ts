@@ -1,9 +1,21 @@
 import pool from "@/lib/db/connection";
 import { DriverStatistics } from "@/lib/types";
 
-export default async function getDriverStatistics(driverId: string): Promise<DriverStatistics> {
+export default async function getDriverStatistics(driverId: string): Promise<DriverStatistics | null> {
     const client = await pool.connect();
     try {
+        const checkRecordsQuery = `
+            SELECT COUNT(*) as record_count 
+            FROM driving_records
+            WHERE driver_id = $1
+        `;
+
+        const recordCheck = await client.query(checkRecordsQuery, [driverId]);
+
+        if (recordCheck.rows[0].record_count === '0') {
+            return null;
+        }
+
         const query = `
         SELECT 
             COUNT(CASE WHEN is_neutral_slide = 1 THEN 1 END) AS total_neutral_slide_incidents,
@@ -18,22 +30,11 @@ export default async function getDriverStatistics(driverId: string): Promise<Dri
             MAX(speed) AS max_speed
         FROM driving_records
         WHERE driver_id = $1
-    `;
+        `;
 
         const result = await client.query<DriverStatistics>(query, [driverId]);
 
-        return result.rows[0] || {
-            total_neutral_slide_incidents: 0,
-            total_neutral_slide_duration: 0,
-            total_overspeed_incidents: 0,
-            total_overspeed_duration: 0,
-            total_rapidly_speedup_incidents: 0,
-            total_rapidly_slowdown_incidents: 0,
-            total_fatigue_driving_incidents: 0,
-            total_oil_leak_incidents: 0,
-            total_throttle_stop_incidents: 0,
-            max_speed: 0
-        };
+        return result.rows[0];
     } finally {
         client.release();
     }

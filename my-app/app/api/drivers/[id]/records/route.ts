@@ -2,34 +2,20 @@ import { NextResponse } from 'next/server';
 
 import getRecordsByDriverId from '@/lib/db/queries/getRecordsByDriverId';
 
-// GET /api/records - Retrieve all records for a specific driver
+// GET /api/drivers/[id]/records - Retrieve all records for a specific driver
 export async function GET(
     request: Request,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        if (!params || typeof params.id === 'undefined') {
-            return NextResponse.json(
-                { error: 'Driver ID is required' },
-                { status: 400 }
-            );
-        }
+        const { id: driverId } = await params;
+        const records = await getRecordsByDriverId(driverId);
 
-        const driverId = params.id;
-        if (!driverId) {
-            return NextResponse.json(
-                { error: 'Driver ID is required' },
-                { status: 400 }
-            );
-        }
-
-        const drivers = await getRecordsByDriverId(driverId);
-
-        return NextResponse.json({ "data": drivers }, { status: 200 });
+        return NextResponse.json({ "data": records }, { status: 200 });
     } catch (error) {
-        console.error('Database error:', error);
+        console.error('Error:', error);
         return NextResponse.json(
-            { error: 'Database connection failed' },
+            { error: error },
             { status: 500 }
         );
     }

@@ -31,6 +31,9 @@ const StatCard: React.FC<StatCardProps> = ({ title, value, icon, subValue, alert
 };
 
 const Statistics: React.FC<{ statistics: DriverStatistics }> = ({ statistics }) => {
+    if (!statistics) {
+        return <div className="h-full w-full flex justify-center items-center"><p className="text-foreground/50">No driving records/statistics available.</p></div>;
+    }
     return (
         <div className="space-y-6">
             <div>
