@@ -5,14 +5,18 @@ from pyspark.sql.window import Window
 import psycopg2
 from psycopg2 import sql
 from tqdm import tqdm
+from dotenv import load_dotenv
 
-# Database connection parameters - using the same as in load_data.py
+# Load environment variables from .env file
+load_dotenv()
+
+# Database connection parameters from environment variables
 DB_PARAMS = {
-    'dbname': 'driving_data',
-    'user': 'postgres',
-    'password': 'GIDs4s9VxBsH5QFVwdpL',
-    'host': 'smart-driver-monitor-db.cfgasukmkdh5.ap-southeast-1.rds.amazonaws.com',
-    'port': '5432'
+    'dbname': os.getenv('DB_NAME'),
+    'user': os.getenv('DB_USER'),
+    'password': os.getenv('DB_PASSWORD'),
+    'host': os.getenv('DB_HOST'),
+    'port': os.getenv('DB_PORT')
 }
 
 # Create the analysis table in PostgreSQL
