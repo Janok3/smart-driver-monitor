@@ -26,6 +26,18 @@ export function Navbar() {
             <NavigationMenu>
                 <NavigationMenuList>
                     <NavigationMenuItem>
+                        <Link href="/analytics" legacyBehavior passHref>
+                            <NavigationMenuLink
+                                className={cn(
+                                    navigationMenuTriggerStyle(),
+                                    pathname === "/analytics" ? "text-foreground" : "text-foreground/50"
+                                )}
+                            >
+                                Analytics
+                            </NavigationMenuLink>
+                        </Link>
+                    </NavigationMenuItem>
+                    <NavigationMenuItem>
                         <Link href="/" legacyBehavior passHref>
                             <NavigationMenuLink
                                 className={cn(

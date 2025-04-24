@@ -40,6 +40,20 @@ export interface DriverStatistics {
     max_speed: number;
 }
 
+export interface SpeedAnalytics {
+    avgSpeedRanking: {
+        driver_id: string;
+        avg_speed: number;
+        avg_speed_rank: number;
+    }[];
+    topSpeedRanking: {
+        driver_id: string;
+        top_speed: number;
+        top_speed_rank: number;
+    }[];
+}
+
+
 export interface RealtimeMonitoringOptions {
     pollingInterval: number;
     batchSize: number;
