@@ -1,5 +1,6 @@
 export const queryKeys = {
     fetchAllDrivers: () => ['drivers'],
+    fetchDriverAnalytics: () => ['drivers', 'analytics'],
     fetchDriverStats: (driverId: string | null) => ['drivers', driverId, 'statistics'],
     fetchDriverRecordsDates: (driverId: string | null) => ['drivers', driverId, 'records', 'dates'],
     fetchRealtimeRecords: (
