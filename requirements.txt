@@ -1,0 +1,12 @@
+# Database connection
+psycopg2==2.9.6
+
+# Environment variables
+python-dotenv==1.0.0
+
+# Spark and data processing
+pyspark==3.3.2
+pandas==1.5.3
+
+# Progress bars
+tqdm==4.65.0
